@@ -13,11 +13,17 @@ public class GameOverWindow : MonoBehaviour {
         scoreText = transform.Find("ScoreText").GetComponent<Text>();
     }
 
+    public void ButtonOverSound() {
+        SoundManager.PlaySound(SoundManager.Sound.ButtonOver);
+    }
+
     public void Restart() {
+        SoundManager.PlaySound(SoundManager.Sound.ButtonClick);
         Loader.Load(Loader.Scene.GameScene);
     }
 
     public void MainMenu() {
+        SoundManager.PlaySound(SoundManager.Sound.ButtonClick);
         Loader.Load(Loader.Scene.MainMenu);
     }
 
