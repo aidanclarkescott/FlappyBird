@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using CodeMonkey;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using CodeMonkey.Utils;
 
 public class Level : MonoBehaviour {
     private const float CAMERA_ORTHO_SIZE = 50f;
@@ -22,12 +25,19 @@ public class Level : MonoBehaviour {
     private float pipeSpawnTimer;
     private float pipeSpawnTimerMax;
     private float gapSize;
+    private State state;
 
     public enum Difficulty {
         Easy,
         Medium,
         Hard,
-        Impossible
+        Impossible,
+    }
+
+    private enum State {
+        WaitingToStart,
+        Playing,
+        BirdDead,
     }
 
     private void Awake() {
@@ -35,15 +45,28 @@ public class Level : MonoBehaviour {
         pipeList = new List<Pipe>();
         pipeSpawnTimerMax = 1f;
         SetDifficulty(Difficulty.Easy);
+        state = State.WaitingToStart;
     }
 
     private void Start() {
+        Bird.GetInstance().OnDied += Bird_OnDied;
+        Bird.GetInstance().OnStartedPlaying += Bird_OnStartedPlaying;
+    }
 
+    private void Bird_OnStartedPlaying(object sender, System.EventArgs e) {
+        state = State.Playing;
+    }
+
+    private void Bird_OnDied(object sender, System.EventArgs e) {
+        //CMDebug.TextPopupMouse("Dead!");
+        state = State.BirdDead;
     }
 
     private void Update() {
-        HandlePipeMovement();
-        HandlePipeSpawning();
+        if (state == State.Playing) {
+            HandlePipeMovement();
+            HandlePipeSpawning();
+        }
     }
 
     private void HandlePipeSpawning() {
