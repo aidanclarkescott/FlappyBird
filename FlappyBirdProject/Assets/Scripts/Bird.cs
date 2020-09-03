@@ -6,7 +6,7 @@ using System;
 
 public class Bird : MonoBehaviour {
 
-    private const float JUMP_AMOUNT = 100f;
+    private const float JUMP_AMOUNT = 90f;
     private Rigidbody2D rigidBody;
     private static Bird instance;
 
