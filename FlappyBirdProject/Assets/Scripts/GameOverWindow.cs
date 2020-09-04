@@ -13,6 +13,8 @@ public class GameOverWindow : MonoBehaviour {
     private void Awake() {
         scoreText = transform.Find("ScoreText").GetComponent<Text>();
         highscoreText = transform.Find("HighscoreText").GetComponent<Text>();
+
+        transform.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
     }
 
     public void ButtonOverSound() {
