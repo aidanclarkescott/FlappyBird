@@ -36,12 +36,6 @@ public class GameOverWindow : MonoBehaviour {
         Hide();
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Loader.Load(Loader.Scene.GameScene);
-        }
-    }
-
     private void Bird_OnDied(object sender, EventArgs e) {
         scoreText.text = scoreText.text = Level.GetInstance().GetPipesPassedCount().ToString();
 
